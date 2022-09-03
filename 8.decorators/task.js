@@ -8,16 +8,17 @@ function cachingDecoratorNew(func) {
 		if (objectInCache) {
 			console.log("Из кэша: " + objectInCache.value);
 			return "Из кэша: " + objectInCache.value;
-		} else {
-			let value = func.call(this, ...args);
-			cache.push({ hash, value });
-
-			if (cache.length > 5) {
-				cache.shift();
-			}
-			console.log("Вычисляем: " + value);
-			return "Вычисляем: " + value;
 		}
+
+		let value = func.call(this, ...args);
+		cache.push({ hash, value });
+
+		if (cache.length > 5) {
+			cache.shift();
+		}
+
+		console.log("Вычисляем: " + value);
+		return "Вычисляем: " + value;
 	}
 	return wrapper;
 }
